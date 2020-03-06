@@ -1,6 +1,6 @@
 # webpack-mb-template
 
-> 基于 vue-cli3 架构的 lib 项目模板，支持导出 js 库和 vue 组件。可应用于纯 js 库，vue 组件库，或者 js + vue 混合库。
+> 基于 vue+vant+vue-cli4 架构的移动端项目模板，包含 http、storage、cache 等，以及 report 构建分析等，适用于hybird app、h5 webapp、公众号等场景。
 
 ### Usage	
 

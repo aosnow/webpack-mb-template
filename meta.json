@@ -9,7 +9,7 @@
       "type": "string",
       "required": true,
       "label": "Project description",
-      "default": "A library project using commonjs type"
+      "default": "A mobile project"
     },
     "author": {
       "type": "string",
