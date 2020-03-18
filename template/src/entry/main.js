@@ -29,7 +29,7 @@ import App from './App.vue';
 
 Promise.all([
   import(/* webpackChunkName: "config" */ '@/config'),
-  import(/* webpackChunkName: "element-ui" */ '@/entry/vant')
+  import(/* webpackChunkName: "vant" */ '@/entry/vant')
 ]).then(modules => {
 
   // 项目配置信息
