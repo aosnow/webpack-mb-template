@@ -14,8 +14,7 @@ Vue.use(Router);
 const routesConfig = [
   { path: '', redirect: '/index' },
   { path: '/', redirect: '/index' },
-  { path: '/index', component: () => import('views/frame'), meta: { title: '商家便利宝', cache: false } },
-  { path: '/picking', component: () => import('views/frame'), meta: { title: '拣货', cache: false } }
+  { path: '/index', component: () => import('views/frame'), meta: { title: '测试首页', cache: false } }
 ];
 
 // 创建路由实例
