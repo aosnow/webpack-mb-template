@@ -8,6 +8,11 @@ import Vue from 'vue';
 import * as utils from '@mudas/filters';
 
 // ----------------------------------------
+// 移动端用于调试的 vconsole 工具
+// ----------------------------------------
+import '@/util/console';
+
+// ----------------------------------------
 // Vue 全局过滤器
 // ----------------------------------------
 Vue.filter('currency', utils.currency);

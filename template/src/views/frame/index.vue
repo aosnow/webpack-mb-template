@@ -9,7 +9,7 @@
     <h2>示例主页：</h2>
     <van-button>
       <img src="~@/assets/logo.png" alt="none" width="30" height="30">
-      {{content}}
+      <span v-text="content"></span>
       <img :src="ImgLogo" alt="none" width="30" height="30">
     </van-button>
 
