@@ -75,7 +75,8 @@ export function parsingUserAgentEnv() {
     MQQBrowser/9.8 Mobile Safari/537.36
    */
 
-  const agent = window.navigator.userAgent;
+  const navigator = window.navigator;
+  const agent = navigator.userAgent;
   const result = Object.create(null);
 
   result.ios = /Mac\s*OS/i.test(agent);
@@ -99,6 +100,9 @@ export function parsingUserAgentEnv() {
 
   // QQ 浏览器 MQQBrowser
   result.qbrowser = /MQQBrowser/i.test(agent);
+
+  // 浏览器语言环境（用以支持多语言国际化）
+  result.language = navigator.language || navigator.userLanguage || navigator.browserLanguage;
 
   // 调试环境或其它未知环境（当以上环境都无效时的环境）
   result.unknow = !result.koubei && !result.alipay && !result.ding && !result.wechat && !result.qbrowser;
