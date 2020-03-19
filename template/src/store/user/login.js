@@ -21,6 +21,10 @@ const State = {
   loginfo: null
 };
 
+const Getters = {
+  [USER_LOGIN]: state => state.loginfo
+};
+
 // 同步立即更新
 const MutAtions = {
   /**
@@ -67,13 +71,7 @@ const Actions = {
   }
 };
 
-const Getters = {
-  [USER_LOGIN]: state => state.loginfo
-};
-
 export default {
-  namespaced: true,
-  strict: true,
   state: State,
   getters: Getters,
   mutations: MutAtions,
