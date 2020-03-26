@@ -91,6 +91,9 @@ Vue.use(DropdownItem);
 Vue.toast = Toast;
 Vue.notify = Notify;
 Vue.dialog = Dialog;
+Vue.prototype.$toast = Toast;
+Vue.prototype.$notify = Notify;
+Vue.prototype.$dialog = Dialog;
 
 // Nav
 Vue.use(Grid);
