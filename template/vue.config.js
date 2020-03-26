@@ -19,7 +19,7 @@ function resolve(...dir) {
 
 // 配置集合
 const webpackConfig = {
-  publicPath: config.basePath,
+  publicPath: config.publicPath,
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: DEBUG,
