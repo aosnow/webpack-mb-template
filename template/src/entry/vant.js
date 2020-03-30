@@ -82,9 +82,6 @@ Vue.use(Steps);
 
 // feedback
 Vue.use(Loading);
-Vue.use(Toast);
-Vue.use(Notify);
-Vue.use(Dialog);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 

@@ -24,7 +24,7 @@ export function mergeStore(modules, options = Object.create(null)) {
 
   modules.forEach(mod => {
     const states = typeof mod.state === 'function' ? mod.state() : mod.state;
-    store.state = { ...store.state, ...mod.state };
+    store.state = { ...store.state, ...states };
     store.getters = { ...store.getters, ...mod.getters };
     store.mutations = { ...store.mutations, ...mod.mutations };
     store.actions = { ...store.actions, ...mod.actions };
@@ -38,7 +38,7 @@ export function mergeStore(modules, options = Object.create(null)) {
  * @param state store.state.item
  * @param data 需要保存的数据体
  */
-export function incrementalSave(state, data) {
+export function increment(state, data) {
   Object.keys(data).forEach(key => {
     if (state[key]) {
       state[key] = data[key];
