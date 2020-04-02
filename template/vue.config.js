@@ -57,8 +57,6 @@ const webpackConfig = {
     entry: resolve('src', 'entry', 'main.js'),
 
     // 排除外部库以及不需要打包的 node_modules 第三方包（如使用CDN或引用本地JS库）
-    // 作为一个合格成熟的 lib，应该学会让用你的人去安装第三方包
-    // 此处在生产环境下排除 vconsole
     externals: DEBUG ? '' : externals
   },
 
