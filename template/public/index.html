@@ -6,12 +6,22 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,viewport-fit=cover">
   <link rel="icon" href="<%= VUE_APP_PUBLICPATH %>static/favicon.ico">
   <title><%= htmlWebpackPlugin.options.title %></title>
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.11/vue.runtime.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.1.2/vuex.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.1.5/vue-router.min.js" rel="preload" as="script">
 </head>
 <body>
   <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
+
+  <!--CDN resources, excluded during webpack build-->
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=05fd0a9627c493a797db67fc28ab44e9"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.11/vue.runtime.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.1.2/vuex.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.1.5/vue-router.min.js"></script>
+
   <!-- built files will be auto injected -->
 </body>
 </html>

@@ -10,7 +10,7 @@ import * as utils from '@mudas/filters';
 // ----------------------------------------
 // 移动端用于调试的 vconsole 工具
 // ----------------------------------------
-import '@/utils/console';
+if (process.env.VUE_APP_ENV !== 'production') import('@/utils/console');
 
 // ----------------------------------------
 // Vue 全局过滤器

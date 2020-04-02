@@ -17,6 +17,10 @@ function resolve(...dir) {
   return path.join(__dirname, ...dir);
 }
 
+// externals 排除列表
+const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter' };
+if (process.env.VUE_APP_ENV === 'production') externals.vconsole = 'VConsole';
+
 // 配置集合
 const webpackConfig = {
   publicPath: config.publicPath,
@@ -55,7 +59,7 @@ const webpackConfig = {
     // 排除外部库以及不需要打包的 node_modules 第三方包（如使用CDN或引用本地JS库）
     // 作为一个合格成熟的 lib，应该学会让用你的人去安装第三方包
     // 此处在生产环境下排除 vconsole
-    externals: process.env.VUE_APP_ENV === 'development' ? '' : [/^(vconsole)/i]
+    externals: DEBUG ? '' : externals
   },
 
   // 配置单页为 pages 启动错误无法解析 public/index.html
