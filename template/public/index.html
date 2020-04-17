@@ -21,6 +21,19 @@
   <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.1.2/vuex.min.js"></script>
   <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.1.5/vue-router.min.js"></script>
 
+  <!--JSSDK for Third platform & mini program-->
+  <script>
+  var userAgent = window.navigator.userAgent;
+
+  // 根据环境不同加载支付宝/微信的小程序 JSSDK
+  if (/AlipayClient/i.test(userAgent)) {
+    document.write('<script src="https://appx/web-view.min.js"><\/script>');
+  }
+  else if (/MicroMessenger/i.test(userAgent)) {
+    document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"><\/script>');
+  }
+  </script>
+
   <!-- built files will be auto injected -->
 </body>
 </html>
