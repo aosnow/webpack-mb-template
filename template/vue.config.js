@@ -69,6 +69,12 @@ const webpackConfig = {
   //   }
   // },
 
+  // 默认情况下 babel-loader 会忽略所有 node_modules 中的文件
+  // 此处列出 node_modules 中同样需要让 babel 转译的 esm 模块
+  transpileDependencies: [
+    '@mudas/*'
+  ],
+
   chainWebpack: (config) => {
 
     // 增加资源识别路径（仍然不支持 style="background: url()" 的路径识别）
