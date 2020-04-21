@@ -1,6 +1,6 @@
 {
-  "name": "{{ name }}",
-  "version": "{{ version }}",
+  "name": "mobile",
+  "version": "0.0.1",
   "description": "{{ description }}",
   "author": "{{ author }}",
   "private": true,
@@ -28,12 +28,12 @@
     "fsevents": "*"
   },
   "dependencies": {
-    "@mudas/env": "0.0.1",
-    "@mudas/filters": "^0.1.4",
-    "@mudas/http": "0.0.27",
+    "@mudas/env": "^0.0.2",
+    "@mudas/filters": "^0.2.0",
+    "@mudas/http": "^0.0.27",
     "@mudas/reset.css": "^0.0.1-beta",
-    "@mudas/storage": "0.0.20",
-    "@mudas/util-store": "0.0.3",
+    "@mudas/storage": "^0.0.20",
+    "@mudas/util-store": "^0.0.5",
     "axios": "^0.19.0",
     "core-js": "^3.6.4",
     "lodash-es": "^4.17.15",

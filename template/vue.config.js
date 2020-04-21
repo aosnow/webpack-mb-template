@@ -99,14 +99,14 @@ const webpackConfig = {
     // config.optimization.splitChunks({
     //   cacheGroups: {
     //     // 将 node_modules 中的包分离出来做长久缓存，加快每次发布的加载速度
-    //     // vendors: {
-    //     //   name: `chunk-vendors`,
-    //     //   test: /[\\/]node_modules[\\/]/,
-    //     //   minChunks: 2,
-    //     //   // maxSize: 102400, // 该设置与多页 pages 与 preload 冲突造成空白页
-    //     //   priority: -10,
-    //     //   chunks: 'initial'
-    //     // },
+    //     vendors: {
+    //       name: `chunk-vendors`,
+    //       test: /[\\/]node_modules[\\/]/,
+    //       minChunks: 2,
+    //       // maxSize: 102400, // 该设置与多页 pages 与 preload 冲突造成空白页
+    //       priority: -10,
+    //       chunks: 'all'
+    //     },
     //     common: {
     //       name: `chunk-common`,
     //       minChunks: 2,

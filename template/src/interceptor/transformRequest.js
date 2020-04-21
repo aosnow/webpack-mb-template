@@ -15,7 +15,7 @@ import {
   isURLSearchParams,
   isUndefined
 } from 'axios/lib/utils';
-import isPlainObject from 'lodash-es/isPlainObject';
+import { isPlainObject } from 'lodash-es';
 import { ContentType } from '@mudas/http';
 
 function setContentTypeIfUnset(headers, value) {
