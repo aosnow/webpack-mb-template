@@ -8,6 +8,7 @@ const path = require('path');
 const os = require('os');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+
 const terserOptions = require('@vue/cli-service/lib/config/terserOptions');
 const config = require('./src/config/path.env');
 const DEBUG = process.env.NODE_ENV === 'development';
