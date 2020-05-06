@@ -12,7 +12,7 @@
 <script>
 import Vue from 'vue';
 import * as Types from '@/store/types';
-import { parsingUserAgentEnv, parsingURLParams, parsingAppletEnv } from '@mudas/env';
+import { parsingURLParams } from '@mudas/env';
 
 export default {
   data() {
