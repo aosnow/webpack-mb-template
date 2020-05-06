@@ -30,30 +30,39 @@ export default {
     // 保障在其它页面刷新也能保留环境级的参数信息
     parsingParams() {
       // 分析和存储环境参数
-      const envInfo = { query: { ...parsingURLParams() }, env: { ...parsingUserAgentEnv() } };
+      const envInfo = { query: { ...parsingURLParams() } };
 
       // 首次缓存环境参数
       this.$store.commit(Types.ENV_INFO, envInfo);
       Vue.storage.cache(Types.ENV_INFO, envInfo);
 
-      parsingAppletEnv()
-      .then((applet) => {
-        const newEnvData = { env: { ...applet } };
+      // uni-app 环境 ready 事件
+      if (process.env.NODE_ENV === 'development') {
+        Vue.env.wechatApplet = false;
+        Vue.env.alipayApplet = false;
 
-        // 增量写入小程序环境信息
-        this.$store.commit(Types.ENV_INFO, newEnvData);
-        Vue.storage.cache(Types.ENV_INFO, newEnvData);
-
-        // 支付宝小程序环境，向小程序派发 ready 事件
-        // 微信小程序环境不支持实时 PostMessage，只能通过 bindload 监听 webview 容器来由小程序端处理
-        if (applet.alipayApplet) {
-          window.my.postMessage({ type: 'ready' });
-        }
-      })
-      .finally(() => {
-        // 环境分析结束
+        // 标记环境分析完成
         this.ready = true;
-      });
+      }
+      else {
+        document.addEventListener('UniAppJSBridgeReady', () => {
+          const { alipay, wechat } = Vue.env;
+
+          uni.getEnv((res) => {
+            Vue.env.wechatApplet = res.miniprogram && wechat;
+            Vue.env.alipayApplet = res.miniprogram && alipay;
+
+            // 向小程序派发 ready 事件（仅支付宝支持实时 message，微信无效）
+            if (Vue.env.alipayApplet) {
+              // uni 的 message 规定都必须将消息体置于 data 属性中
+              uni.postMessage({ data: { type: 'ready' } });
+            }
+
+            // 标记环境分析完成
+            this.ready = true;
+          });
+        });
+      }
 
     }
   }

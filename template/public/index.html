@@ -27,16 +27,24 @@
   <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/moment/2.24.0/moment.min.js"></script>
   <% } %>
 
-  <!--JSSDK for Third platform & mini program-->
+  <!--JSSDK for Third platform & miniprogram-->
   <script>
   var userAgent = window.navigator.userAgent;
+  var isWebView = false;
 
   // 根据环境不同加载支付宝/微信的小程序 JSSDK
   if (/AlipayClient/i.test(userAgent)) {
+    isWebView = true;
     document.write('<script src="https://appx/web-view.min.js"><\/script>');
   }
   else if (/MicroMessenger/i.test(userAgent)) {
+    isWebView = true;
     document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"><\/script>');
+  }
+
+  // uni-app 小程序公共API封装
+  if (isWebView) {
+    document.write('<script src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"><\/script>');
   }
   </script>
 
