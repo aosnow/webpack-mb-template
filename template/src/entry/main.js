@@ -37,7 +37,7 @@ Promise.all([
   Vue.conf = modules[0];
 
   // 运行环境信息
-  Vue.env = parsingUserAgentEnv();
+  Vue.env = Vue.prototype.$env = parsingUserAgentEnv();
 
   // UI 框架
   // vant.js 已经处理好 vue.use()
