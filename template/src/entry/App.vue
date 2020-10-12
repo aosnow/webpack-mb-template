@@ -26,6 +26,26 @@ export default {
   },
 
   methods: {
+    {{#if_eq environment 'mini for alipay/wechat'}}
+    uniAppJSBridgeReady() {
+      const { alipay, wechat } = Vue.env;
+
+      uni.getEnv((res) => {
+        Vue.env.wechatApplet = res.miniprogram && wechat;
+        Vue.env.alipayApplet = res.miniprogram && alipay;
+
+        // 向小程序派发 ready 事件（仅支付宝支持实时 message，微信无效）
+        if (Vue.env.alipayApplet) {
+          // uni 的 message 规定都必须将消息体置于 data 属性中
+          uni.postMessage({ data: { type: 'ready' } });
+        }
+
+        // 标记环境分析完成
+        this.ready = true;
+      });
+    },
+
+    {{/if_eq}}
     // 分析环境参数，并存入缓存和 store
     // 保障在其它页面刷新也能保留环境级的参数信息
     parsingParams() {
@@ -36,34 +56,29 @@ export default {
       this.$store.commit(Types.ENV_INFO, envInfo);
       Vue.storage.cache(Types.ENV_INFO, envInfo);
 
-      // uni-app 环境 ready 事件
-      if (process.env.NODE_ENV === 'development') {
+      {{#if_eq environment 'none'}}
+      this.ready = true;
+      {{/if_eq}}
+      {{#if_eq environment 'web for alipay/wechat'}}
+      this.ready = true;
+      {{/if_eq}}
+      {{#if_eq environment 'mini for alipay/wechat'}}
+      // PC浏览器测试环境
+      if (Vue.env.unknow) {
         Vue.env.wechatApplet = false;
         Vue.env.alipayApplet = false;
-
-        // 标记环境分析完成
         this.ready = true;
       }
+      // uni-app 环境 ready 事件
       else {
-        document.addEventListener('UniAppJSBridgeReady', () => {
-          const { alipay, wechat } = Vue.env;
-
-          uni.getEnv((res) => {
-            Vue.env.wechatApplet = res.miniprogram && wechat;
-            Vue.env.alipayApplet = res.miniprogram && alipay;
-
-            // 向小程序派发 ready 事件（仅支付宝支持实时 message，微信无效）
-            if (Vue.env.alipayApplet) {
-              // uni 的 message 规定都必须将消息体置于 data 属性中
-              uni.postMessage({ data: { type: 'ready' } });
-            }
-
-            // 标记环境分析完成
-            this.ready = true;
-          });
-        });
+        if (window.UniAppJSBridge) {
+          this.uniAppJSBridgeReady();
+        }
+        else {
+          document.addEventListener('UniAppJSBridgeReady', this.uniAppJSBridgeReady);
+        }
       }
-
+      {{/if_eq}}
     }
   }
 };
