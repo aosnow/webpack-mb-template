@@ -5,18 +5,14 @@
 // ------------------------------------------------------------------------------
 
 import {
-  isFormData,
-  isArrayBuffer,
-  isBuffer,
-  isStream,
-  isFile,
-  isBlob,
+  isUndefined,
   isObject,
-  isArrayBufferView,
-  isURLSearchParams,
-  isUndefined
+  isFormData,
+  isArrayBuffer, isArrayBufferView, isBuffer, isStream,
+  isFile, isBlob,
+  isURLSearchParams
 } from 'axios/lib/utils';
-import { isPlainObject } from 'lodash-es';
+import { isPlainObject } from '@mudas/util';
 import { ContentType } from '@mudas/http';
 
 function setContentTypeIfUnset(headers, value) {
@@ -26,7 +22,9 @@ function setContentTypeIfUnset(headers, value) {
 }
 
 export default [
-  // 拦截 request，处理业务逻辑错误
+  // `transformRequest` 允许在向服务器发送前，修改请求数据
+  // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
+  // 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
   function(data, headers) {
 
     const contentType = headers['Content-Type'];
@@ -49,12 +47,12 @@ export default [
     }
 
     if (isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      setContentTypeIfUnset(headers, `${ContentType.form};charset=utf-8`);
       return data.toString();
     }
 
     if (isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      setContentTypeIfUnset(headers, `${ContentType.json};charset=utf-8`);
       return JSON.stringify(data);
     }
 

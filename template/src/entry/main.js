@@ -1,9 +1,7 @@
 import Vue from 'vue';
-import EasyHttp from '@mudas/http';
+
 import Storage from '@mudas/storage';
 import StorageConfig from '@/config/storage.conf';
-import { interceptors, transformRequest, transformResponse } from '@/interceptor';
-import { parsingUserAgentEnv } from '@mudas/env';
 
 // ----------------------------------------
 // 基本环境配置
@@ -27,33 +25,14 @@ import '@/css/main.scss';
 // ----------------------------------------
 import App from './App.vue';
 
-
 Promise.all([
   import(/* webpackChunkName: "config" */ '@/config'),
-  import(/* webpackChunkName: "vant" */ '@/entry/vant')
-]).then(modules => {
+  import(/* webpackChunkName: "vant" */ '@/entry/vant'),
+  import(/* webpackChunkName: "custom-ui" */ './custom-ui')
+]).then(chunks => {
 
   // 项目配置信息
-  Vue.conf = modules[0];
-
-  // 运行环境信息
-  Vue.env = Vue.prototype.$env = parsingUserAgentEnv();
-
-  // UI 框架
-  // vant.js 已经处理好 vue.use()
-
-  // 初始化 http
-  const { http } = Vue.conf;
-  http.forEach(config => {
-    config.transformRequest = transformRequest;
-    config.transformResponse = transformResponse;
-  });
-  Vue.use(EasyHttp, http);
-
-  // 注册HTTP通信拦截器函数
-  Object.keys(interceptors).forEach(key => {
-    Vue.http[key].batchUseInterceptor(interceptors[key]);
-  });
+  Vue.conf = Vue.prototype.$conf = chunks[0];
 
   // 初始化 storage
   const storage = new Storage.Store({ unique: process.env.VUE_APP_UNIQUE, config: StorageConfig });

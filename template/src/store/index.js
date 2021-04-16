@@ -14,6 +14,7 @@ import User from './user';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+  strict: true,
   modules: {
     [Module.ENV]: Env,
     [Module.USER]: User

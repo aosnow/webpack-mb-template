@@ -7,59 +7,57 @@
   <link rel="icon" href="<%= VUE_APP_PUBLICPATH %>static/favicon.ico">
   <title><%= htmlWebpackPlugin.options.title %></title>
   <% if(process.env.NODE_ENV==='production'){ %>
-  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.11/vue.runtime.min.js" rel="preload" as="script">
-  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.2.0/vuex.min.js" rel="preload" as="script">
-  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.1.6/vue-router.min.js" rel="preload" as="script">
-  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/moment/2.24.0/moment.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.12/vue.runtime.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.6.0/vuex.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.4.9/vue-router.min.js" rel="preload" as="script">
   <% } %>
 </head>
 <body>
   <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
   </noscript>
   <div id="app"></div>
 
   <% if(process.env.NODE_ENV==='production'){ %>
   <!--CDN resources, excluded during webpack build-->
-  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.11/vue.runtime.min.js"></script>
-  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.2.0/vuex.min.js"></script>
-  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.1.6/vue-router.min.js"></script>
-  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/moment/2.24.0/moment.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.12/vue.runtime.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.6.0/vuex.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.4.9/vue-router.min.js"></script>
   <% } %>
 
-  {{#if_eq environment 'web for alipay/wechat'}}
-  <!--JSSDK for Third platform-->
+  <!--H5 以及小程序 SDK-->
   <script>
   var userAgent = window.navigator.userAgent;
+  var miniProgram = /miniprogram/i.test(userAgent);
+  var sdks = {};
 
-  if (/AlipayClient/i.test(userAgent)) {
-    document.write('<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.min.js"><\/script>');
+  // JSSDK for third platform
+  // JSSDK 用于支付宝和微信内置浏览器环境
+  if (/alipayclient/i.test(userAgent)) {
+    sdks.alipayjsapi311 = '<%= VUE_APP_PUBLICPATH %>static/lib/alipayjsapi.min.js';
   }
-  else if (/MicroMessenger/i.test(userAgent)) {
-    document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"><\/script>');
+  else if (/micromessenger/i.test(userAgent)) {
+    sdks.jweixin160 = '<%= VUE_APP_PUBLICPATH %>static/lib/jweixin-1.6.0.js';
+  }
+
+  // miniprogram webview project
+  // webview sdk 用于支付宝和微信小程序内置 webview 浏览器环境
+  if (miniProgram) {
+    if (/alipayclient/i.test(userAgent)) {
+      sdks.webview = 'https://appx/web-view.min.js';
+    }
+    else if (/micromessenger/i.test(userAgent)) {
+      sdks.jweixin160 = '<%= VUE_APP_PUBLICPATH %>static/lib/jweixin-1.6.0.js';
+    }
+    sdks.uni152 = '<%= VUE_APP_PUBLICPATH %>static/lib/uni.webview.1.5.2.js';
+  }
+
+  for (var key in sdks) {
+    document.write('<script src="' + sdks[key] + '"><\/script>');
   }
   </script>
 
-  {{/if_eq}}
-  {{#if_eq environment 'mini for alipay/wechat'}}
-  <!--miniprogram webview project-->
-  <script>
-  var userAgent = window.navigator.userAgent;
-
-  if (/AlipayClient/i.test(userAgent)) {
-    document.write('<script src="https://appx/web-view.min.js"><\/script>');
-  }
-  else if (/miniProgram/i.test(userAgent) || /MicroMessenger/i.test(userAgent)) {
-    document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"><\/script>');
-  }
-
-  document.write('<script src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"><\/script>');
-  </script>
-
-  {{/if_eq}}
-  {{#if_eq environment 'none'}}
-  <!--h5 mobile project-->
-  {{/if_eq}}
   <!-- built files will be auto injected -->
 </body>
 </html>

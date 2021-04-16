@@ -5,20 +5,10 @@
 // ------------------------------------------------------------------------------
 
 import Vue from 'vue';
-import * as filters from '@mudas/filters';
-
-// ----------------------------------------
-// 移动端用于调试的 vconsole 工具
-// ----------------------------------------
-if (process.env.VUE_APP_ENV !== 'release') import('@/utils/console');
-
-// ----------------------------------------
-// Vue 全局过滤器
-// ----------------------------------------
-Vue.filter('currency', filters.currency);
-Vue.filter('dateformat', filters.dateformat);
-Vue.filter('timestr', filters.timestr);
-Vue.filter('distance', filters.distance);
+import Handler from '@mudas/plugin-vue-handler';
+import { parsingUserAgent } from '@mudas/env';
+import Http from '@/http';
+import Filter from '@/filter';
 
 // ----------------------------------------
 // Vue 全局参数设置
@@ -27,13 +17,26 @@ Vue.config.performance = true;
 Vue.config.productionTip = process.env.NODE_ENV === 'development';
 
 // ----------------------------------------
-// STORE 设置（确保在 Vuex.Store 创建前设置生效）
+// 运行环境信息
 // ----------------------------------------
-// 让 store 内部能快速定位如 module/name 中的 name
-// 因为开启了 module.namespace 模式，只需要在内部使用最后的 name
-/* eslint-disable */
-if (!String.prototype.namespace) {
-  String.prototype.__defineGetter__('namespace', function() {
-    return this.substring(this.lastIndexOf('/') + 1);
-  });
-}
+Vue.env = Vue.prototype.$env = parsingUserAgent();
+
+// ----------------------------------------
+// 移动端用于调试的 vconsole 工具
+// ----------------------------------------
+if (!Vue.env.unknow && process.env.VUE_APP_ENV !== 'release') import('@/utils/console');
+
+// ----------------------------------------
+// Vue 全局过滤器（依赖 Vue.conf）
+// ----------------------------------------
+Vue.use(Filter);
+
+// ----------------------------------------
+// 初始化 http
+// ----------------------------------------
+Vue.use(Http);
+
+// ----------------------------------------
+// Vue 全局事件监听插件
+// ----------------------------------------
+Vue.use(Handler);

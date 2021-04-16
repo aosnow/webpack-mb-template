@@ -34,7 +34,7 @@ const webpackConfig = {
     // 跨域配置
     proxy: {
       '/api': {
-        target: 'http://172.16.31.16:8080',
+        target: 'http://test.api.blibao.com:8080',
         changeOrigin: true,
         secure: false,
         pathRewrite: { '^/api': '' }

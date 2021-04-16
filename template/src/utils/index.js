@@ -4,4 +4,7 @@
 // created: 2020.03.11 下午 20:04
 // ------------------------------------------------------------------------------
 
-export * from '@mudas/util-store';
+export * from '@mudas/util';
+
+export * from './store';
+export * from './unit';
