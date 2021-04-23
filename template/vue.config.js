@@ -6,7 +6,6 @@
 
 const path = require('path');
 const os = require('os');
-const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const terserOptions = require('@vue/cli-service/lib/config/terserOptions');
@@ -45,8 +44,11 @@ const webpackConfig = {
   css: {
     loaderOptions: {
       less: {
-        modifyVars: {
-          hack: `true; @import "${resolve('src', 'css', 'vant.less')}";`
+        // 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。
+        lessOptions: {
+          modifyVars: {
+            hack: `true; @import "${resolve('src', 'css', 'vant.less')}";`
+          }
         }
       }
     }

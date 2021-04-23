@@ -28,12 +28,10 @@ export default {
   methods: {
 
     uniAppJSBridgeReady() {
+      const { miniProgram } = window;
       const { alipay, wechat } = this.$env;
 
-      this.setParams({
-        alipayApplet: window.miniProgram && alipay,
-        wechatApplet: window.miniProgram && wechat
-      });
+      this.setParams({ alipayApplet: miniProgram && alipay, wechatApplet: miniProgram && wechat });
 
       // 标记环境分析完成
       this.ready = true;

@@ -8,8 +8,8 @@
   <title><%= htmlWebpackPlugin.options.title %></title>
   <% if(process.env.NODE_ENV==='production'){ %>
   <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.12/vue.runtime.min.js" rel="preload" as="script">
-  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.6.0/vuex.min.js" rel="preload" as="script">
-  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.4.9/vue-router.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.6.2/vuex.min.js" rel="preload" as="script">
+  <link href="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.5.1/vue-router.min.js" rel="preload" as="script">
   <% } %>
 </head>
 <body>
@@ -22,14 +22,15 @@
   <% if(process.env.NODE_ENV==='production'){ %>
   <!--CDN resources, excluded during webpack build-->
   <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue/2.6.12/vue.runtime.min.js"></script>
-  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.6.0/vuex.min.js"></script>
-  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.4.9/vue-router.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vuex/3.6.2/vuex.min.js"></script>
+  <script src="https://lib-yhbc.oss-cn-hangzhou.aliyuncs.com/vue-router/3.5.1/vue-router.min.js"></script>
   <% } %>
 
   <!--H5 以及小程序 SDK-->
+  <!--小程序环境可能比较严苛，将 jsapi 独立存储到本地，避免域安全问题-->
   <script>
   var userAgent = window.navigator.userAgent;
-  var miniProgram = /miniprogram/i.test(userAgent);
+  var miniProgram = /miniprogram/i.test(userAgent); // 支付宝开发工具PC模拟器无效（得用真机）
   var sdks = {};
 
   // JSSDK for third platform
